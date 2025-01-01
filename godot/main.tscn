@@ -29,7 +29,7 @@ grow_vertical = 2
 color = Color(1, 0.48, 1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_xej5r")]
-position = Vector2(48, 56)
+position = Vector2(48, 55)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -37,7 +37,7 @@ wait_time = 0.5
 [node name="ScoreTimer" type="Timer" parent="."]
 
 [node name="StartTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.5
 one_shot = true
 
 [node name="StartPos" type="Marker2D" parent="."]

@@ -1,6 +1,6 @@
-use std::{f32::consts::PI, ops::DerefMut};
+use std::f32::consts::PI;
 
-use godot::{classes::{Marker2D, PathFollow2D, RigidBody2D, Time, Timer}, obj::{NewGd, WithBaseField}, prelude::*};
+use godot::{classes::{CollisionShape2D, Marker2D, PathFollow2D, RigidBody2D, Time, Timer}, meta::ParamType, obj::{NewGd, WithBaseField}, prelude::*};
 use rand::Rng;
 
 use crate::{enemy, hud, player};
@@ -20,6 +20,12 @@ struct MainScene {
 impl MainScene {
     #[func]
     fn game_over(&mut self) {
+        let mut player = self.base().get_node_as::<player::Player>("Player");
+        let mut player = player.bind_mut();
+        player.base_mut().hide();
+        let mut collision = player.base().get_node_as::<CollisionShape2D>("CollisionShape2D");
+        collision.set_deferred("disabled", &true.to_variant());
+
         let mut score_timer = self.base().get_node_as::<Timer>("ScoreTimer");
         let mut mob_timer = self.base().get_node_as::<Timer>("MobTimer");
         score_timer.stop();
@@ -128,7 +134,6 @@ impl INode for MainScene {
         let input = Input::singleton();
 
         if input.is_action_pressed("end_game") {
-            self.base_mut().emit_signal("hit", &[]);
             self.game_over();
         }
     }

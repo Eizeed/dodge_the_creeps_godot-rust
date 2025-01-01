@@ -14,7 +14,7 @@ impl Player {
     #[signal]
     fn hit();
 
-    fn on_esc_click(&mut self) {
+    pub fn on_esc_click(&mut self) {
         self.base_mut().hide();
         self.base_mut().emit_signal("hit", &[]);
 
@@ -24,11 +24,8 @@ impl Player {
 
     #[func]
     fn on_body_enter(&mut self, _body: Gd<PhysicsBody2D>) {
-        self.base_mut().hide();
         self.base_mut().emit_signal("hit", &[]);
 
-        let mut collision = self.base().get_node_as::<CollisionShape2D>("CollisionShape2D");
-        collision.set_deferred("disabled", &true.to_variant());
     }
 
     #[func]
@@ -73,9 +70,9 @@ impl IArea2D for Player {
         if input.is_action_pressed("move_down") {
             velocity += Vector2::DOWN;
         }
-        if input.is_action_pressed("end_game") {
-            self.on_esc_click();
-        }
+        // if input.is_action_pressed("end_game") {
+        //     self.on_esc_click();
+        // }
 
         let mut animated_sprite = self
             .base()
