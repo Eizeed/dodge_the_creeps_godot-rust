@@ -26,6 +26,9 @@ impl Hud {
     pub fn show_gameover(&mut self) {
         self.show_message("Game over".into());
 
+        // Creating timer without need to create child node
+        // It will work like 1-time timer
+        // and we can bind signal to it
         let mut timer = self.base().get_tree().unwrap().create_timer(2.0).unwrap();
         timer.connect("timeout", &self.base().callable("show_start_button"));
     }
